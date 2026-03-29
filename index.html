@@ -4,148 +4,382 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noshlog — Calorie Scanner, Always Free</title>
-    <meta name="description" content="Scan any food barcode to instantly see calories and macros. Free forever. No paywall, no tricks.">
+    <meta name="description" content="Scan any food barcode to instantly see calories, protein, carbs, fat and more. Track your meals, review weekly trends. Free forever. No account needed.">
+    <meta name="keywords" content="calorie counter, barcode scanner, food tracker, nutrition tracker, macro tracker, diet app, free calorie app, food diary">
+    <meta name="author" content="Lijno">
+    <meta name="theme-color" content="#2E7D32">
+    <link rel="canonical" href="https://noshlog.com/">
+
+    <!-- Open Graph -->
     <meta property="og:title" content="Noshlog — Calorie Scanner, Always Free">
-    <meta property="og:description" content="Scan any food barcode to instantly see calories and macros. Track your day with one tap.">
+    <meta property="og:description" content="Scan any food barcode to instantly see calories and macros. Track your day with one tap. Free forever.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://noshlog.com/">
+    <meta property="og:site_name" content="Noshlog">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="nl_NL">
+    <meta property="og:locale:alternate" content="de_DE">
+    <meta property="og:locale:alternate" content="fr_FR">
+    <meta property="og:locale:alternate" content="es_ES">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Noshlog — Calorie Scanner, Always Free">
+    <meta name="twitter:description" content="Scan any food barcode to instantly see calories and macros. Free forever.">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Noshlog",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Android, iOS",
+        "description": "Scan any food barcode to instantly see calories, protein, carbs, fat and more. Track meals, review weekly trends. Free forever.",
+        "url": "https://noshlog.com",
+        "author": {
+            "@type": "Organization",
+            "name": "Lijno",
+            "url": "https://lijno.nl"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Barcode scanning for instant nutrition info",
+            "Daily food diary with meal grouping",
+            "Weekly calorie trends and macro charts",
+            "Offline mode with local data storage",
+            "5 languages supported",
+            "No account required"
+        ],
+        "softwareVersion": "1.0.0",
+        "inLanguage": ["en", "nl", "de", "fr", "es"]
+    }
+    </script>
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is Noshlog really free?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Barcode scanning, daily food logging, and weekly summaries are completely free. Forever. An optional Pro subscription removes ads and adds CSV export."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do I need to create an account?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Noshlog works without any account or sign-up. All your data stays on your device."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What food database does Noshlog use?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Noshlog uses Open Food Facts, the world's largest open food database with over 3 million products."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does Noshlog work offline?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Previously scanned products are cached locally. You can track meals without internet."
+                }
+            }
+        ]
+    }
+    </script>
+
     <style>
-        :root { --green: #2E7D32; --green-light: #4CAF50; --bg: #FFFBFE; --text: #1C1B1F; --muted: #49454F; --surface: #F5F5F5; }
+        :root {
+            --green: #2E7D32;
+            --green-light: #4CAF50;
+            --green-glow: rgba(76, 175, 80, 0.15);
+            --bg: #FAFAFA;
+            --text: #1C1B1F;
+            --muted: #5F5F5F;
+            --surface: #FFFFFF;
+            --surface-alt: #F0F4F0;
+            --border: #E0E0E0;
+        }
         @media (prefers-color-scheme: dark) {
-            :root { --bg: #1C1B1F; --text: #E6E1E5; --muted: #CAC4D0; --surface: #2B2930; }
+            :root {
+                --bg: #0F1110;
+                --text: #E8E8E8;
+                --muted: #A0A0A0;
+                --surface: #1A1D1A;
+                --surface-alt: #1E221E;
+                --border: #2A2E2A;
+                --green-glow: rgba(76, 175, 80, 0.08);
+            }
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        nav {
+            position: fixed; top: 0; width: 100%;
+            padding: 16px 24px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background: color-mix(in srgb, var(--bg) 85%, transparent);
+        }
+        .nav-brand {
+            font-size: 20px; font-weight: 700; color: var(--green);
+            text-decoration: none; display: flex; align-items: center; gap: 8px;
+        }
+        .nav-links a {
+            color: var(--muted); text-decoration: none; font-size: 14px;
+            margin-left: 24px; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--green); }
 
         .hero {
-            text-align: center;
-            padding: 80px 24px 60px;
+            text-align: center; padding: 140px 24px 80px;
+            max-width: 720px; margin: 0 auto;
         }
-        .hero-icon {
-            font-size: 80px;
-            margin-bottom: 24px;
+        .hero-badge {
+            display: inline-block; padding: 6px 16px;
+            background: var(--green-glow); border: 1px solid var(--green);
+            border-radius: 100px; font-size: 13px; font-weight: 500;
+            color: var(--green); margin-bottom: 24px;
         }
         .hero h1 {
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--green);
-            margin-bottom: 12px;
+            font-size: clamp(36px, 6vw, 56px); font-weight: 800;
+            line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.02em;
         }
-        .hero .tagline {
-            font-size: 20px;
-            color: var(--muted);
-            margin-bottom: 40px;
+        .hero h1 span { color: var(--green); }
+        .hero p {
+            font-size: 18px; color: var(--muted);
+            max-width: 520px; margin: 0 auto 40px;
         }
+        .hero-cta { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 28px; border-radius: 12px; text-decoration: none;
+            font-weight: 600; font-size: 15px; transition: all 0.2s;
+        }
+        .btn-primary { background: var(--green); color: white; }
+        .btn-primary:hover {
+            background: var(--green-light); transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(46, 125, 50, 0.3);
+        }
+        .btn-secondary {
+            background: var(--surface); color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover { border-color: var(--green); color: var(--green); }
 
-        .features {
-            display: flex;
-            justify-content: center;
-            gap: 32px;
-            flex-wrap: wrap;
-            padding: 0 24px 60px;
-            max-width: 900px;
-            margin: 0 auto;
+        .section { padding: 80px 24px; max-width: 1080px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 56px; }
+        .section-header h2 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+        .section-header p { font-size: 16px; color: var(--muted); max-width: 480px; margin: 0 auto; }
+
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
         }
-        .feature {
-            flex: 1;
-            min-width: 220px;
-            max-width: 280px;
-            text-align: center;
-            padding: 32px 24px;
-            background: var(--surface);
-            border-radius: 16px;
+        .feature-card {
+            padding: 32px 28px; background: var(--surface);
+            border: 1px solid var(--border); border-radius: 16px; transition: all 0.25s;
+        }
+        .feature-card:hover {
+            border-color: var(--green); transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--green-glow);
         }
         .feature-icon {
-            font-size: 40px;
-            margin-bottom: 16px;
+            width: 48px; height: 48px; background: var(--green-glow);
+            border-radius: 12px; display: flex; align-items: center;
+            justify-content: center; font-size: 24px; margin-bottom: 20px;
         }
-        .feature h3 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            color: var(--green);
-        }
-        .feature p {
-            font-size: 14px;
-            color: var(--muted);
-            line-height: 1.6;
-        }
+        .feature-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
 
-        .cta {
-            text-align: center;
-            padding: 40px 24px 60px;
+        .steps {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px; text-align: center;
         }
-        .cta p {
-            font-size: 16px;
-            color: var(--muted);
-            margin-bottom: 24px;
+        .step-number {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--green); color: white;
+            font-weight: 700; font-size: 18px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px;
         }
-        .badges {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
+        .step h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .step p { font-size: 14px; color: var(--muted); }
+
+        .stats {
+            display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+            padding: 48px 24px; background: var(--surface-alt);
+            border-radius: 20px; max-width: 1080px; margin: 0 auto;
         }
-        .badge {
-            display: inline-block;
-            padding: 12px 24px;
-            background: var(--green);
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 14px;
+        .stat { text-align: center; }
+        .stat-value { font-size: 36px; font-weight: 800; color: var(--green); }
+        .stat-label { font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+        .faq-list { max-width: 640px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid var(--border); padding: 20px 0; }
+        .faq-item summary {
+            font-size: 16px; font-weight: 600; cursor: pointer;
+            list-style: none; display: flex;
+            justify-content: space-between; align-items: center;
         }
-        .badge:hover { background: var(--green-light); }
+        .faq-item summary::after {
+            content: '+'; font-size: 20px; color: var(--green); transition: transform 0.2s;
+        }
+        .faq-item[open] summary::after { transform: rotate(45deg); }
+        .faq-item p { font-size: 14px; color: var(--muted); margin-top: 12px; line-height: 1.7; }
+
+        .cta-bottom {
+            text-align: center; padding: 80px 24px;
+            background: var(--surface-alt); margin-top: 40px;
+        }
+        .cta-bottom h2 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+        .cta-bottom p { font-size: 16px; color: var(--muted); margin-bottom: 32px; }
 
         footer {
-            text-align: center;
-            padding: 32px 24px;
-            border-top: 1px solid var(--surface);
-            color: var(--muted);
-            font-size: 13px;
+            text-align: center; padding: 40px 24px;
+            border-top: 1px solid var(--border); color: var(--muted); font-size: 13px;
         }
-        footer a { color: var(--muted); margin: 0 12px; }
+        footer a { color: var(--muted); text-decoration: none; margin: 0 12px; }
+        footer a:hover { color: var(--green); }
+        .footer-links { margin-bottom: 16px; }
+
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+            .stats { gap: 24px; padding: 32px 16px; }
+        }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <div class="hero-icon">🌿</div>
-        <h1>Noshlog</h1>
-        <p class="tagline">Calorie Scanner, Always Free</p>
-    </div>
 
-    <div class="features">
-        <div class="feature">
-            <div class="feature-icon">📷</div>
-            <h3>Scan Any Barcode</h3>
-            <p>Point your camera at any food barcode to instantly see calories and macros. No subscription required.</p>
+<nav>
+    <a href="/" class="nav-brand">&#127807; Noshlog</a>
+    <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#faq">FAQ</a>
+        <a href="privacy.html">Privacy</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-badge">Free forever. No account needed.</div>
+    <h1>Scan. Track.<br><span>Stay healthy.</span></h1>
+    <p>Scan any food barcode and instantly see calories, protein, carbs, fat and more. The simplest way to track what you eat.</p>
+    <div class="hero-cta">
+        <a href="https://play.google.com/store/apps/details?id=com.noshlog.noshlog" class="btn btn-primary">
+            &#9654; Get on Google Play
+        </a>
+        <a href="#features" class="btn btn-secondary">Learn more</a>
+    </div>
+</section>
+
+<section class="section" style="padding-top: 40px; padding-bottom: 40px;">
+    <div class="stats">
+        <div class="stat"><div class="stat-value">3M+</div><div class="stat-label">Products in database</div></div>
+        <div class="stat"><div class="stat-value">5</div><div class="stat-label">Languages supported</div></div>
+        <div class="stat"><div class="stat-value">0</div><div class="stat-label">Data sent to servers</div></div>
+        <div class="stat"><div class="stat-value">100%</div><div class="stat-label">Free core features</div></div>
+    </div>
+</section>
+
+<section class="section" id="features">
+    <div class="section-header">
+        <h2>Everything you need. Nothing you don't.</h2>
+        <p>Track nutrition without the bloat. No social features, no meal plans, no complexity.</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">&#128247;</div>
+            <h3>Instant Barcode Scan</h3>
+            <p>Point your camera at any food barcode. Calories, protein, carbs, fat, fiber and sugar appear in seconds. Powered by Open Food Facts.</p>
         </div>
-        <div class="feature">
-            <div class="feature-icon">📊</div>
-            <h3>Track Your Day</h3>
-            <p>Log meals with one tap. See your running calorie total and macro breakdown at a glance.</p>
+        <div class="feature-card">
+            <div class="feature-icon">&#128203;</div>
+            <h3>Daily Food Diary</h3>
+            <p>Every scan is logged automatically. See your running calorie total, remaining budget and progress bar. Group entries by meal type.</p>
         </div>
-        <div class="feature">
-            <div class="feature-icon">🔒</div>
+        <div class="feature-card">
+            <div class="feature-icon">&#128200;</div>
+            <h3>Weekly Overview</h3>
+            <p>Calorie trend charts, macro donut charts and daily breakdown cards. Understand your eating patterns over time.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">&#128274;</div>
             <h3>Privacy First</h3>
-            <p>Your food data never leaves your device. No account, no cloud, no tracking. Just you and your food log.</p>
+            <p>All data stays on your device. No account, no cloud sync, no tracking. Your food diary is yours alone.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">&#127760;</div>
+            <h3>Works Offline</h3>
+            <p>Previously scanned products are cached locally. Track your meals even without an internet connection.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">&#127463;&#127475;</div>
+            <h3>5 Languages</h3>
+            <p>English, Nederlands, Deutsch, Fran&ccedil;ais and Espa&ntilde;ol. Follows your device language or pick in Settings.</p>
         </div>
     </div>
+</section>
 
-    <div class="cta">
-        <p>Available on Android and iOS</p>
-        <div class="badges">
-            <a href="#" class="badge">Google Play — Coming Soon</a>
-            <a href="#" class="badge">App Store — Coming Soon</a>
-        </div>
+<section class="section" id="how-it-works">
+    <div class="section-header"><h2>Three steps. That's it.</h2></div>
+    <div class="steps">
+        <div class="step"><div class="step-number">1</div><h3>Scan</h3><p>Open the camera and point it at any food barcode</p></div>
+        <div class="step"><div class="step-number">2</div><h3>Review</h3><p>See full nutrition info and adjust your serving size</p></div>
+        <div class="step"><div class="step-number">3</div><h3>Log</h3><p>Add to your diary with one tap. Done.</p></div>
     </div>
+</section>
 
-    <footer>
-        <p>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Service</a>
-            <a href="https://lijno.nl">Made with ❤️ in the Netherlands by Lijno</a>
-        </p>
-        <p style="margin-top: 12px;">&copy; 2026 Lijno. All rights reserved.</p>
-    </footer>
+<section class="section" id="faq">
+    <div class="section-header"><h2>Frequently Asked Questions</h2></div>
+    <div class="faq-list">
+        <details class="faq-item"><summary>Is Noshlog really free?</summary><p>Yes. Barcode scanning, daily food logging, and weekly summaries are completely free. Forever. An optional Pro subscription ($2.99/month) removes ads and adds CSV data export.</p></details>
+        <details class="faq-item"><summary>Do I need to create an account?</summary><p>No. Noshlog works without any account, email, or sign-up. Your data stays on your device. Just install and start scanning.</p></details>
+        <details class="faq-item"><summary>What food database does it use?</summary><p>Noshlog uses Open Food Facts, the world's largest open food database with over 3 million products. You can also create custom foods with your own nutrition values.</p></details>
+        <details class="faq-item"><summary>Does it work offline?</summary><p>Yes. Products you've scanned before are cached on your device. You can log meals without internet. New barcodes require a connection for the first lookup.</p></details>
+        <details class="faq-item"><summary>How is this different from MyFitnessPal?</summary><p>Noshlog is simpler and more private. No account required, no social features, no server-side data storage. Just scan, log, and track. The core features are free forever, not behind a paywall.</p></details>
+        <details class="faq-item"><summary>What languages are supported?</summary><p>English, Dutch, German, French, and Spanish. The app follows your device language automatically, or you can pick your preferred language in Settings.</p></details>
+    </div>
+</section>
+
+<section class="cta-bottom">
+    <h2>Start tracking in seconds</h2>
+    <p>No sign-up. No paywall. Just scan and go.</p>
+    <div class="hero-cta">
+        <a href="https://play.google.com/store/apps/details?id=com.noshlog.noshlog" class="btn btn-primary">&#9654; Get on Google Play</a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="https://lijno.nl">Lijno</a>
+    </div>
+    <p>&copy; 2026 Lijno. Made with care in the Netherlands.</p>
+</footer>
+
 </body>
 </html>
